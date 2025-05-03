@@ -10,6 +10,7 @@ const router = express.Router()
 
 
 router.post('/', upload.single('image'), productController.addProduct)
+router.get('/',  productController.getAllProducts)
 
 
 export default router
