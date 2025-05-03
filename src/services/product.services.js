@@ -21,5 +21,23 @@ export class ProductService {
           throw error;
         }
       }
+
+      async getProduct(id) {
+        try {
+          const products = await productRepository.getProductById(id);
+          return products;
+        } catch (error) {
+          throw error;
+        }
+      }
       
+
+      async deleteProduct(id) {
+        try {
+          const response =  await productRepository.deleteProductById(id)
+          return response
+        } catch (error) {
+          throw error;
+        }
+      }
 }

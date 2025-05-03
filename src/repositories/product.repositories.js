@@ -20,7 +20,8 @@ export class ProducRepository {
       } 
       
       async getAllProduct(filters) {
-        const { category, minPrice, maxPrice, search } = filters;
+        try {
+          const { category, minPrice, maxPrice, search } = filters;
         const query = {};
       
         if (category) query.category = category;
@@ -38,6 +39,28 @@ export class ProducRepository {
         }
       
         return await ProductModel.find(query);
+        } catch (error) {
+          throw error; 
+        }
+      }
+
+
+      async getProductById(id) {
+        try {
+          return await ProductModel.findById(id)
+        } catch (error) {  
+         throw error; 
+        }
+      }
+
+      async deleteProductById(id) {
+        try {
+          const res = await ProductModel.findByIdAndDelete(id)
+          return res
+          
+        } catch (error) {  
+         throw error; 
+        }
       }
       
 }

@@ -1,4 +1,4 @@
-import { uploadToCloudinary } from "../config/cloudinary.js";
+import { deleteFromCloudinary, uploadToCloudinary } from "../config/cloudinary.js";
 import HTTP_statusCode from "../constants/httpStatusCodes.js";
 import { ProductService } from "../services/product.services.js";
 
@@ -46,4 +46,39 @@ export class ProductController {
     }
   }
   
+  async getProduct(req, res, next) {
+    try {
+      
+      const { id } = req.params
+      // console.log('hitt get product');
+      
+      const response = await productService.getProduct(id)
+  // console.log('response',response);
+  
+      res.status(HTTP_statusCode.OK).json({
+        message: "Product Data fetched successfully",
+        data: response,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+  
+  async deleteProduct(req, res, next) {
+    try {
+      
+      const { id } = req.params
+      const response = await productService.deleteProduct(id)
+      
+      if(response.image) {
+        await deleteFromCloudinary(response.image)
+      }
+      res.status(HTTP_statusCode.OK).json({
+        message: "Product Data deleted successfully",
+        data: response,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

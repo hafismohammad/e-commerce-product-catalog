@@ -11,6 +11,9 @@ const router = express.Router()
 
 router.post('/', upload.single('image'), productController.addProduct)
 router.get('/',  productController.getAllProducts)
+router.get('/:id',  productController.getProduct)
+router.delete('/:id',  productController.deleteProduct)
+
 
 
 export default router
